@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shubham's Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> <!-- Link the external CSS file -->
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="logo">
+        <h1>Shubham This Side</h1>
+    </div>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="burger" id="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</nav>
+
+<!-- Projects Section -->
+<section id="projects" class="section projects">
+    <h2>My Projects</h2>
+    <br>
+    <div class="project-list">
+        <div class="project-item" style="background-image: url('/images/Affiliate.jpg');">
+            <h3><a href="http://amazon-affiliate.42web.io/?i=1" style="color: gold;">Amazon Affiliate</a></h3>
+            <p>A website where customers can buy the best products through affiliate links.</p>
+        </div>
+        <div class="project-item" style="background-image: url('/images/Autheentication.jpg');">
+            <h3><a href="http://authentication-sys.rf.gd/?i=1" style="color: gold;">iDiscuss 24x7</a></h3>
+            <p>An authentication system where users can log in securely using email and password.</p>
+        </div>
+        <!-- Add more project items as needed -->
+    </div>
+    <h2>To-do app with javascript</h2>
+    <br>
+    <div class="project-list">
+        <div class="project-item" style="background-image: url('/images/TO-DO-APP.jpg');">
+            <h3><a href="to_do_app.html" style="color: rgb(60, 255, 0);">TO-Do App</a></h3>
+            <p>Simple, user-friendly interface for adding, organizing, and tracking daily to-dos.</p>
+        </div>
+        </div>
+    <br>
+
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Shubham Sakhesehariya. All rights reserved.</p>
+</footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const burger = document.getElementById('burger');
+            const navLinks = document.getElementById('nav-links');
+        
+            burger.addEventListener('click', function() {
+                navLinks.classList.toggle('nav-active');
+            });
+        });
+        </script>
+</body>
+</html>
