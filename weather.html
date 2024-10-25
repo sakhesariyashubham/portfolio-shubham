@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <style>
+    /* Basic Styling */
+    body {
+      background-color: #222;
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      width: 90%;
+      max-width: 470px;
+      background: linear-gradient(135deg, #00feba, #5b548a);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    /* Enhanced Search Bar Styling */
+    .search {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .search input {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 30px;
+      border: 1px solid #ddd;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      outline: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    .search input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .search input:focus {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #00feba;
+    }
+    .search button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #00feba;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .search button img {
+      width: 20px;
+      filter: invert(1);
+    }
+    .search button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Weather Details */
+    .weather, .error {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="search">
+      <input type="text" placeholder="Search city weather..." spellcheck="false" />
+      <button><img src="images/search.png" alt="Search" /></button>
+    </div>
+    <div class="error">Invalid city name. Please try again.</div>
+    <div class="weather">
+      <img class="weather-icon" src="" alt="Weather icon" />
+      <h1 class="temp">Temperature: --°C</h1>
+      <h2 class="city">City: --</h2>
+      <div class="details">
+        <div class="humidity">Humidity: --%</div>
+        <div class="wind">Wind Speed: -- km/h</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const apiKey = "7d5e74e7b112e34001dc87b79a2fc7c3";
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    const searchBox = document.querySelector(".search input");
+    const searchBtn = document.querySelector(".search button");
+    const weatherIcon = document.querySelector(".weather-icon");
+  
+    async function checkWeather(city) {
+      const response = await fetch(`${apiUrl}${city}&appid=${apiKey}`);
+      const weatherData = document.querySelector(".weather");
+      const errorData = document.querySelector(".error");
+  
+      if (response.status === 404) {
+        errorData.style.display = "block";
+        weatherData.style.display = "none";
+      } else {
+        const data = await response.json();
+        document.querySelector(".city").innerText = data.name;
+        document.querySelector(".temp").innerText = `Temperature: ${Math.round(data.main.temp)}°C`;
+        document.querySelector(".humidity").innerText = `Humidity: ${data.main.humidity}%`;
+        document.querySelector(".wind").innerText = `Wind Speed: ${data.wind.speed} km/h`;
+  
+        // Update icon based on weather conditions
+        switch (data.weather[0].main) {
+          case "Clouds":
+            weatherIcon.src = "images/clouds.png";
+            break;
+          case "Clear":
+            weatherIcon.src = "images/clear.png";
+            break;
+          case "Rain":
+            weatherIcon.src = "images/rain.png";
+            break;
+          case "Drizzle":
+            weatherIcon.src = "images/drizzle.png";
+            break;
+          case "Mist":
+            weatherIcon.src = "images/mist.png";
+            break;
+          default:
+            weatherIcon.src = "images/default.png";
+        }
+  
+        weatherData.style.display = "block";
+        errorData.style.display = "none";
+      }
+    }
+  
+    searchBtn.addEventListener("click", () => {
+      const city = searchBox.value.trim();
+      if (city) {
+        checkWeather(city);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
