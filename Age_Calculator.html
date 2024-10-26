@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8; /* Light background for contrast */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            margin: 10% auto;
+            padding: 20px;
+            background-color: #4b0082; /* Indigo color */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            color: white;
+        }
+
+        #currDate {
+            font-size: 20px;
+            margin: 10px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        input {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid #ffd700; /* Gold color */
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #fff; /* Change border color on focus */
+            outline: none;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: #ffd700; /* Gold color */
+            color: black;
+            margin: 10px 0;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: white;
+            color: #4b0082; /* Indigo color */
+        }
+
+        #displayAge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 150px;
+            background-color: #e74c3c; /* Red color */
+            border-radius: 15px;
+            margin-top: 20px;
+            visibility: hidden;
+            transition: visibility 0.3s;
+        }
+
+        #age {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            #currDate {
+                font-size: 18px;
+            }
+
+            input,
+            button {
+                font-size: 14px;
+            }
+
+            #age {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p id="currDate"></p>
+        <p>Enter your DOB in format: (MM/DD/YYYY)</p>
+        <input type="text" placeholder="Enter your D.O.B" id="DOB">
+        <button id="CalcAge">Calculate Age</button>
+        <button id="Reset">Reset</button>
+    </div>
+    <div id="displayAge">
+        <p id="age"></p>
+    </div>
+    <script>
+        let currDate = document.getElementById("currDate");
+        let dateOfBirth = document.querySelector("#DOB");
+        const CalcAge = document.getElementById("CalcAge");
+        const Reset = document.getElementById("Reset");
+        const displayAge = document.getElementById("displayAge");
+        const Age = document.getElementById("age");
+        var today = new Date();
+        currDate.innerText = `Today's Date is: ${today.toLocaleDateString('en-US')}`;
+
+        const calculateAge = () => {
+            var birthDate = new Date(dateOfBirth.value);
+            if (isNaN(birthDate.getTime())) {
+                Age.innerText = 'Please enter a valid date (MM/DD/YYYY).';
+                displayAge.style.visibility = "visible";
+                return;
+            }
+
+            var ageYears = today.getFullYear() - birthDate.getFullYear();
+            var ageMonths = today.getMonth() - birthDate.getMonth();
+            var ageDays = today.getDate() - birthDate.getDate();
+
+            if (ageDays < 0) {
+                ageMonths--;
+                ageDays += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // Get days in previous month
+            }
+            if (ageMonths < 0) {
+                ageYears--;
+                ageMonths += 12; // Adjust months
+            }
+
+            displayAge.style.visibility = "visible";
+            Age.innerText = `You are ${ageYears} years, ${ageMonths} months, and ${ageDays} days old.`;
+        };
+
+        CalcAge.addEventListener("click", () => {
+            if (dateOfBirth.value.trim() === "") {
+                Age.innerText = 'Please enter your D.O.B.';
+                displayAge.style.visibility = "visible";
+            } else {
+                calculateAge();
+            }
+        });
+
+        Reset.addEventListener("click", () => {
+            dateOfBirth.value = '';
+            Age.innerText = '';
+            displayAge.style.visibility = "hidden";
+        });
+    </script>
+</body>
+</html>
